@@ -20,16 +20,7 @@ def listin(list,check):
         if check in item:
             return True
     return False
-def varreplace(varx,commands):
-    new = []
-    for cmd in commands:
-        new.append([])
-        for item in cmd:
-            if item in varx:
-                new[-1].append(varx[item])
-            else:
-                new[-1].append(item)
-    return new 
+
 opcodes = {
 "SET":4,
 "JUMP":5,
@@ -39,7 +30,6 @@ opcodes = {
 "SUB":8,
 }
 
-var = {}
 
 commands = []
 file = open(sys.argv[1])
@@ -47,18 +37,11 @@ for line in file.read().split("\n"):
     commands.append(line.split(" "))
 output = []
 
-for item in commands:
-    if item[0] == "var":
-        var[item[1]] = item[2]
 
 for item in commands:
     if item[0].startswith("#"):
         commands.remove(item)
-while listin(commands,"var"):
-    for item in commands:
-        if item[0] == "var":
-            commands.remove(item)
-commands = varreplace(var,commands)
+
 if EXTRA:
     global jumpcalc
     jumpcalc = []
