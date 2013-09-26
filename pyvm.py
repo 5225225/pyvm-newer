@@ -1,4 +1,5 @@
 import sys
+import json
 
 def jb(p1,p2):
     count = 0
@@ -11,9 +12,15 @@ DEBUG = True
 prog_test = [1,0,6,5,0,7,1,0]
 prog_mult = [5,0,8,10,10,1,0,9,7,0,3,0,4,8,0,7,0,5,6,0,7,0,6,0,255,5,0,8] #INPUTS: 3(num1),4(num2),7(num1 - 1) OUTPUTS: 3(result)
 prog_test2 = [4,0,20,1,4,0,21,2,7,0,20,0,21,5,0,3,0,18]
-memory = prog_test2
+
+
+memory = []
+for item in json.loads(sys.stdin.read()):
+    memory.append(int(item))
+
 #16 bits of addresses, 8 bits an address.
 #TODO add overflow and underflow when incrementing and decrementing.
+
 while len(memory) < 2**16:
     memory.append(0)
 
