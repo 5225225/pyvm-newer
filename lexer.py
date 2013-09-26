@@ -8,9 +8,7 @@ import sys
 import cmdio
 from cmdio import Command
 
-infile = sys.stdin.read().split("\n")
-
-
+infile = sys.stdin.read().strip().split("\n")
 
 commands = []
 
