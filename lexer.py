@@ -8,7 +8,16 @@ import sys
 import cmdio
 from cmdio import Command
 
-infile = sys.stdin.read().strip().split("\n")
+def decomment(commands):
+    output = []
+    for item in commands:
+        if "#" in item:
+            output.append(item[:item.find("#")])
+        else:
+            output.append(item)
+    return output
+infile = decomment(sys.stdin.read().strip().split("\n"))
+
 
 commands = []
 

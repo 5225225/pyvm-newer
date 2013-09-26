@@ -4,6 +4,8 @@ import json
 import cmdio
 from cmdio import Command
 
+EXTRA = True
+
 def jb(p1,p2):
     p1 = int(p1)
     p2 = int(p2)
@@ -62,15 +64,32 @@ for cmd in commands:
     elif cmd.opcode == "SET": #FORMAT: SET *x y
         out(splitbytes(cmd.arguments[0]))
         out(cmd.arguments[1])
-    elif cmd.opcode == "JUMP" or (EXTRA and item[0] == "JUMPL"):#FORMAT: JUMP *x
+    elif cmd.opcode == "JUMP" or (EXTRA and cmd.opcode == "JUMPL"):#FORMAT: JUMP *x
         if cmd.opcode == "JUMP":
             out(splitbytes(cmd.arguments[0]))
-            
-    elif cmd.opcode == "IFE" or (EXTRA and item[0] == "IFEL"):#FORMAT: IFE *x *y *z
+        if cmd.opcode == "JUMPL":
+            addr = 0
+            for item in commands:
+                addr = addr + item.size
+                if str(item.line) == cmd.arguments[0]:
+                    break
+            else:
+                sys.stderr.write("Could not find line number: " + str(cmd.arguments[0]) + "\n")
+            out(splitbytes(addr))
+    elif cmd.opcode == "IFE" or (EXTRA and cmd.opcode == "IFEL"):#FORMAT: IFE *x *y *z
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))
-        out(splitbytes(cmd.arguments[2]))
-        
+        if cmd.opcode == "IFE":
+            out(splitbytes(cmd.arguments[2]))
+        if cmd.opcode == "IFEL":
+            addr = 0
+            for item in commands:
+                addr = addr + item.size
+                if str(item.line) == cmd.arguments[0]:
+                    break
+            else:
+                sys.stderr.write("Could not find line number: " + str(cmd.arguments[0]) + "\n")
+            out(splitbytes(addr))
     elif cmd.opcode == "ADD" or cmd.opcode == "SUB" :#FORMAT: ADD/SUB *x *y
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))

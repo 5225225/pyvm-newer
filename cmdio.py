@@ -20,7 +20,7 @@ class Command:
         self.arguments = arguments
         self.size = -1
         
-        if False:pass
+        if False: pass
         elif self.opcode == "SET": self.size = 4 #FORMAT: SET *x y
         elif self.opcode == "JUMP" or self.opcode == "JUMPL": self.size = 3 #FORMAT: JUMP *x      
         elif self.opcode == "IFE" or self.opcode == "IFEL": self.size = 7 #FORMAT: IFE *x *y *z  
