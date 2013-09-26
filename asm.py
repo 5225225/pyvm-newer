@@ -62,11 +62,11 @@ for cmd in commands:
     elif cmd.opcode == "SET": #FORMAT: SET *x y
         out(splitbytes(cmd.arguments[0]))
         out(cmd.arguments[1])
-    elif cmd.opcode == "JUMP":  or (EXTRA and item[0] == "JUMPL"):#FORMAT: JUMP *x
+    elif cmd.opcode == "JUMP" or (EXTRA and item[0] == "JUMPL"):#FORMAT: JUMP *x
         if cmd.opcode == "JUMP":
             out(splitbytes(cmd.arguments[0]))
             
-    elif cmd.opcode == "IFE": # or (EXTRA and item[0] == "IFEL"):#FORMAT: IFE *x *y *z
+    elif cmd.opcode == "IFE" or (EXTRA and item[0] == "IFEL"):#FORMAT: IFE *x *y *z
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))
         out(splitbytes(cmd.arguments[2]))
