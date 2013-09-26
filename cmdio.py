@@ -1,3 +1,4 @@
+import sys
 import json
 
 def jsonencode(commands):
@@ -25,4 +26,5 @@ class Command:
         elif self.opcode == "IFE" or self.opcode == "IFEL": self.size = 7 #FORMAT: IFE *x *y *z  
         elif self.opcode == "ADD" or self.opcode == "SUB" : self.size = 5 #FORMAT: ADD/SUB *x *y
         else:
-            print(self.line + ": Invalid opcode of " + self.opcode)
+            print(str(self.line) + ": Invalid opcode of " + str(self.opcode))
+            sys.exit(1)
