@@ -6,16 +6,12 @@ import json
 import sys
 
 import cmdio
+from cmdio import Command
 
 infile = sys.stdin.read().split("\n")
 
 
-class Command:
-    def __init__(self, line, opcode, arguments):
-        self.line = line
-        self.opcode = opcode
-        self.arguments = arguments
-    
+
 commands = []
 
 for index,item in enumerate(infile, start=1):
