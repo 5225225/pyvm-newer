@@ -31,6 +31,7 @@ opcodes = {
 "JUMP":5,
 "JUMPL":5,
 "IFE":6,
+"IFEL":6,
 "ADD":7,
 "SUB":8,
 }
@@ -70,11 +71,11 @@ for cmd in commands:
         if cmd.opcode == "JUMPL":
             addr = 0
             for item in commands:
-                addr = addr + item.size
                 if str(item.line) == cmd.arguments[0]:
                     break
+                addr = addr + item.size
             else:
-                sys.stderr.write("Could not find line number: " + str(cmd.arguments[0]) + "\n")
+                sys.stderr.write("JUMPL: Could not find line number: " + str(cmd.arguments[0]) + "\n")
             out(splitbytes(addr))
     elif cmd.opcode == "IFE" or (EXTRA and cmd.opcode == "IFEL"):#FORMAT: IFE *x *y *z
         out(splitbytes(cmd.arguments[0]))
@@ -85,10 +86,10 @@ for cmd in commands:
             addr = 0
             for item in commands:
                 addr = addr + item.size
-                if str(item.line) == cmd.arguments[0]:
+                if str(item.line) == cmd.arguments[2]:
                     break
             else:
-                sys.stderr.write("Could not find line number: " + str(cmd.arguments[0]) + "\n")
+                sys.stderr.write("IFEL: Could not find line number: " + str(cmd.arguments[2]) + "\n")
             out(splitbytes(addr))
     elif cmd.opcode == "ADD" or cmd.opcode == "SUB" :#FORMAT: ADD/SUB *x *y
         out(splitbytes(cmd.arguments[0]))
