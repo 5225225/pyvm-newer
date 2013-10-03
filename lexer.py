@@ -25,6 +25,8 @@ for index,item in enumerate(infile, start=1):
     line = index
     opcode = item.split(" ")[0]
     arguments = item.split(" ")[1:]
+    while "" in arguments:
+        arguments.remove("")
     cmd = Command(line,opcode,arguments)
     commands.append(cmd)
 
