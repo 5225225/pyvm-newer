@@ -26,6 +26,15 @@ def listin(list,check):
             return True
     return False
 
+def search(line,argnumber):
+    addr = 0
+    for item in commands:
+        if str(item.line) == str(line.arguments[argnumber]):
+            break
+    else:
+        sys.stderr.write("{}: Could not find line number {}\n".format(line.line,line.arguments[argnumber]))
+    addr = addr + item.size
+    return(addr)
 opcodes = {
 "SET":4,
 "JUMP":5,
@@ -69,28 +78,14 @@ for cmd in commands:
         if cmd.opcode == "JUMP":
             out(splitbytes(cmd.arguments[0]))
         if cmd.opcode == "JUMPL":
-            addr = 0
-            for item in commands:
-                if str(item.line) == cmd.arguments[0]:
-                    break
-                addr = addr + item.size
-            else:
-                sys.stderr.write("JUMPL: Could not find line number: " + str(cmd.arguments[0]) + "\n")
-            out(splitbytes(addr))
+            out(splitbytes(search(cmd,0)))
     elif cmd.opcode == "IFE" or (EXTRA and cmd.opcode == "IFEL"):#FORMAT: IFE *x *y *z
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))
         if cmd.opcode == "IFE":
             out(splitbytes(cmd.arguments[2]))
         if cmd.opcode == "IFEL":
-            addr = 0
-            for item in commands:
-                addr = addr + item.size
-                if str(item.line) == cmd.arguments[2]:
-                    break
-            else:
-                sys.stderr.write("IFEL: Could not find line number: " + str(cmd.arguments[2]) + "\n")
-            out(splitbytes(addr))
+            out(splitbytes(search(cmd,2)))
     elif cmd.opcode == "ADD" or cmd.opcode == "SUB" :#FORMAT: ADD/SUB *x *y
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))
