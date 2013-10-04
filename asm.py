@@ -43,6 +43,7 @@ opcodes = {
 "IFEL":6,
 "ADD":7,
 "SUB":8,
+"GCHR":9,
 }
 
 commands = []
@@ -94,7 +95,8 @@ for cmd in commands:
     elif cmd.opcode == "ADD" or cmd.opcode == "SUB" :#FORMAT: ADD/SUB *x *y
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))
-        
+    elif cmd.opcode == "GCHR": #FORMAT: GCHR *x
+        out(splitbytes(cmd.arguments[0]))
 strout = []
 for item in output:
     strout.append(str(item))

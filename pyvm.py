@@ -1,5 +1,7 @@
 import sys
 import json
+import tty
+import termios
 
 def jb(p1,p2):
     count = 0
@@ -53,6 +55,8 @@ while True:
             print("*{}({}) WAS ADDED TO *{}({}), LEAVING RESULT IN FIRST ADDRESS".format( jb(args[0],args[1]), memory[jb(args[0],args[1])], jb(args[2],args[3]), memory[jb(args[2],args[3])]))
         elif command == 8:
             print("*{}({}) WAS SUBTRACTED FROM *{}({}), LEAVING RESULT IN FIRST ADDRESS".format(jb(args[0],args[1]),memory[jb(args[0],args[1])],jb(args[2],args[3]),memory[jb(args[2],args[3])]))
+#        elif command == 9:
+#            print("GOT A CHARACTER: {}, LEFT IT IN *{}".format(ord(memory[jb(args[0],args[1])]),jb(args[0],args[1])))
         else:
             print("INVALID COMMAND")
 
@@ -73,6 +77,16 @@ while True:
     elif command == 8:
         memory[jb(args[0],args[1])] -= memory[jb(args[2],args[3])]
         counter = counter + 5
+    elif command == 9:
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        memory[jb(args[0],args[1])] = ord(ch)
+        counter = counter + 3
     else:
         #Command not found, must be data. I have to increment the counter anyway
         counter = counter + 1
