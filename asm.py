@@ -31,9 +31,9 @@ def search(line,argnumber):
     for item in commands:
         if str(item.line) == str(line.arguments[argnumber]):
             break
+        addr = addr + item.size
     else:
         sys.stderr.write("{}: Could not find line number {}\n".format(line.line,line.arguments[argnumber]))
-    addr = addr + item.size
     return(addr)
 opcodes = {
 "SET":4,
