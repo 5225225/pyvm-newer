@@ -15,8 +15,12 @@ prog_test2 = [4,0,20,1,4,0,21,2,7,0,20,0,21,5,0,3,0,18]
 
 
 memory = []
-for item in json.loads(sys.stdin.read()):
-    memory.append(int(item))
+if len(sys.argv) == 2:
+    for item in json.loads(open(sys.argv[1]).read()):
+        memory.append(int(item))
+else:
+    for item in json.loads(sys.stdin.read()):
+        memory.append(int(item))
 
 #16 bits of addresses, 8 bits an address.
 #TODO add overflow and underflow when incrementing and decrementing.

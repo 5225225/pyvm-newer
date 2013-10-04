@@ -47,9 +47,14 @@ opcodes = {
 
 commands = []
 
-with sys.stdin as f:
-    for item in cmdio.jsondecode(f.read()):
-        commands.append(item)
+if len(sys.argv) == 2:
+    with open(sys.argv[1]) as f:
+        for item in cmdio.jsondecode(f.read()):
+            commands.append(item)
+else:
+    with sys.stdin as f:
+        for item in cmdio.jsondecode(f.read()):
+            commands.append(item)
 
 
 

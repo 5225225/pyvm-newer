@@ -16,8 +16,10 @@ def decomment(commands):
         else:
             output.append(item)
     return output
-infile = decomment(sys.stdin.read().strip().split("\n"))
-
+if len(sys.argv) == 2:
+    infile = decomment(open(sys.argv[1]).read().strip().split("\n"))
+else:
+    infile = decomment(sys.stdin.read().strip().split("\n"))
 
 commands = []
 
