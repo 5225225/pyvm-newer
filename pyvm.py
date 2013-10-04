@@ -79,7 +79,12 @@ while True:
         counter = counter + 5
     elif command == 9:
         fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
+        try:
+            old_settings = termios.tcgetattr(fd)
+        except termios.error:
+            print("Couldn't read one character, are you piping into stdin?")
+            print("All of the commands support using a file instead of stdin")
+            sys.exit(1)
         try:
             tty.setraw(sys.stdin.fileno())
             ch = sys.stdin.read(1)
