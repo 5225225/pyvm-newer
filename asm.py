@@ -15,7 +15,10 @@ def jb(p1,p2):
     return count
     
 def splitbytes(x):
-    x = int(x)
+    try:
+        x = int(x)
+    except ValueError:
+        return x
     p1 = x // 256
     p2 = x - (p1*256)
     return(p1,p2)
@@ -34,6 +37,14 @@ def search(line,argnumber):
         addr = addr + item.size
     else:
         sys.stderr.write("{}: Could not find line number {}\n".format(line.line,line.arguments[argnumber]))
+    return(addr)
+    
+def searchnoerr(linenum):
+    addr = 0
+    for item in commands:
+        if str(linenum) == str(item.line):
+            break
+        addr = addr + item.size
     return(addr)
 opcodes = {
 "SET":4,
@@ -72,7 +83,10 @@ def out(*arg):
             elif type(item) == type(0):
                 output.append(item)
             elif type(item) == type("str"):
-                output.append(int(item))
+                try:
+                    output.append(int(item))
+                except ValueError:
+                    output.append(item)
         except TypeError:
             output.append(item) #Item was not a tuple, don't bother trying to unpack it.
 for cmd in commands:
@@ -102,5 +116,13 @@ for cmd in commands:
         out(splitbytes(cmd.arguments[0]))
 strout = []
 for item in output:
-    strout.append(str(item))
+    if type(item) == type(0):
+        strout.append(str(item))
+    elif item.startswith("!"):
+        linenum = item.split("+")[0][1:]
+        offset = item.split("+")[1]
+        for x in splitbytes(searchnoerr(linenum)+int(offset)):
+            strout.append(str(x))
+    else:
+        strout.append(str(item))
 print(json.dumps(strout))
