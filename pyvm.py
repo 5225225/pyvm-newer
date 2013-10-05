@@ -91,8 +91,11 @@ while True:
             ch = sys.stdin.read(1)
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        memory[jb(args[0],args[1])] = ord(ch)
-        if DEBUG: print("GOT A CHARACTER: {}, LEFT IT IN *{}".format(chr(memory[jb(args[0],args[1])]),jb(args[0],args[1])))
+        key = ord(ch)
+        if key == 27:
+            counter = 2**16 #Quit program on ESC key
+        memory[jb(args[0],args[1])] = key
+        if DEBUG: print("GOT A CHARACTER: {}, LEFT IT IN *{}".format(memory[jb(args[0],args[1])],jb(args[0],args[1])))
         counter = counter + 3
     else:
         #Command not found, must be data. I have to increment the counter anyway
