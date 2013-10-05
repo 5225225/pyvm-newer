@@ -55,8 +55,9 @@ while True:
             print("*{}({}) WAS ADDED TO *{}({}), LEAVING RESULT IN FIRST ADDRESS".format( jb(args[0],args[1]), memory[jb(args[0],args[1])], jb(args[2],args[3]), memory[jb(args[2],args[3])]))
         elif command == 8:
             print("*{}({}) WAS SUBTRACTED FROM *{}({}), LEAVING RESULT IN FIRST ADDRESS".format(jb(args[0],args[1]),memory[jb(args[0],args[1])],jb(args[2],args[3]),memory[jb(args[2],args[3])]))
-#        elif command == 9:
-#            print("GOT A CHARACTER: {}, LEFT IT IN *{}".format(ord(memory[jb(args[0],args[1])]),jb(args[0],args[1])))
+        elif command == 9:
+            pass
+            #Moved debug to where it's run, or the gotten character would not display properly.
         else:
             print("INVALID COMMAND")
 
@@ -91,6 +92,7 @@ while True:
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         memory[jb(args[0],args[1])] = ord(ch)
+        if DEBUG: print("GOT A CHARACTER: {}, LEFT IT IN *{}".format(chr(memory[jb(args[0],args[1])]),jb(args[0],args[1])))
         counter = counter + 3
     else:
         #Command not found, must be data. I have to increment the counter anyway
