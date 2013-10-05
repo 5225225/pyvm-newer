@@ -58,6 +58,8 @@ while True:
         elif command == 9:
             pass
             #Moved debug to where it's run, or the gotten character would not display properly.
+        elif command == 10:
+            print("PRINTED *{}({}) TO STDERR".format(jb(args[0],args[1]),memory[jb(args[0],args[1])]))
         else:
             print("INVALID COMMAND")
 
@@ -96,6 +98,9 @@ while True:
             counter = 2**16 #Quit program on ESC key
         memory[jb(args[0],args[1])] = key
         if DEBUG: print("GOT A CHARACTER: {}, LEFT IT IN *{}".format(memory[jb(args[0],args[1])],jb(args[0],args[1])))
+        counter = counter + 3
+    elif command == 10:
+        sys.stderr.write(chr(memory[jb(args[0],args[1])]))
         counter = counter + 3
     else:
         #Command not found, must be data. I have to increment the counter anyway
