@@ -11,7 +11,9 @@ from cmdio import Command
 def decomment(commands):
     output = []
     for item in commands:
-        if item.startswith("#"):
+        if item == "":
+            output.append("#")
+        elif item.startswith("#"):
             output.append("#") #Magic value, read on line 30
         elif "#" in item:
             output.append(item[:item.find("#")])
