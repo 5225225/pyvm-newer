@@ -11,7 +11,9 @@ from cmdio import Command
 def decomment(commands):
     output = []
     for item in commands:
-        if "#" in item:
+        if item.startswith("#"):
+            output.append("#") #Magic value, read on line 30
+        elif "#" in item:
             output.append(item[:item.find("#")])
         else:
             output.append(item)
@@ -25,12 +27,13 @@ commands = []
 
 for index,item in enumerate(infile, start=1):
     line = index
-    opcode = item.split(" ")[0]
-    arguments = item.split(" ")[1:]
-    while "" in arguments:
-        arguments.remove("")
-    cmd = Command(line,opcode,arguments)
-    commands.append(cmd)
+    if not item == "#":
+        opcode = item.split(" ")[0]
+        arguments = item.split(" ")[1:]
+        while "" in arguments:
+            arguments.remove("")
+        cmd = Command(line,opcode,arguments)
+        commands.append(cmd)
 
 
 sys.stdout.write(cmdio.jsonencode(commands))
