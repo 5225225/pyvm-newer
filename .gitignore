@@ -34,5 +34,7 @@ nosetests.xml
 .project
 .pydevproject
 
+#Commonly named output files
 input.asm
 out.txt
+memory.bin
