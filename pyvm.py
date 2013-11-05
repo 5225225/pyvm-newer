@@ -106,5 +106,7 @@ while True:
         #Command not found, must be data. I have to increment the counter anyway
         counter = counter + 1
     if counter >= 2**16:
-        print(memory)
+        memorydump= open("memory.bin","wb")
+        for byte in memory:
+            memorydump.write(chr(int(byte)).encode("ascii"))
         sys.exit(0)
