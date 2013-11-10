@@ -107,6 +107,5 @@ while True:
         counter = counter + 1
     if counter >= 2**16:
         memorydump= open("memory.bin","wb")
-        for byte in memory:
-            memorydump.write(chr(int(byte)).encode("ascii"))
+        memorydump.write(bytes(memory))
         sys.exit(0)
