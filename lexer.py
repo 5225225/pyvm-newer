@@ -34,7 +34,17 @@ for index,item in enumerate(infile, start=1):
         arguments = item.split(" ")[1:]
         while "" in arguments:
             arguments.remove("")
-        cmd = Command(line,opcode,arguments)
+        intargs = []
+        for item in arguments:
+            if item.startswith("$"):
+                intargs.append(int(item[1:],16))
+            elif item.startswith("%"):
+                intargs.append(int(item[1:],2))
+            elif item.startswith("0"):
+                intargs.append(int(item[1:],8))
+            else:
+                intargs.append(int(item))
+        cmd = Command(line,opcode,intargs)
         commands.append(cmd)
 
 
