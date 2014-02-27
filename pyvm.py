@@ -79,7 +79,7 @@ while True:
             #Moved debug to where it's run, we don't know the input yet.
 
         elif command == 10:
-            print("PRINTED *{}({}) TO STDERR".format(debugprint(memory, args)))
+            print("PRINTED {} TO STDERR".format(debugprint(memory, args)))
 
         else:
             print("INVALID COMMAND")

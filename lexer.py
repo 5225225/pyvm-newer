@@ -37,13 +37,13 @@ for index, item in enumerate(infile, start=1):
             arguments.remove("")
         intargs = []
         for item in arguments:
-            if item.startswith("$"):
+            if item.startswith("$"):  # Convert hex values to decimal
                 intargs.append(int(item[1:], 16))
             elif item.startswith("%"):
-                intargs.append(int(item[1:], 2))
+                intargs.append(int(item[1:], 2))  # Convert binary to decimal
             elif item.startswith("0"):
                 try:
-                    intargs.append(int(item[1:], 8))
+                    intargs.append(int(item[1:], 8))  # Convert oct to decimal
                 except ValueError:
                     if item == "0":
                         intargs.append(0)
