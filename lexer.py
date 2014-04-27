@@ -8,14 +8,12 @@ from cmdio import Command
 def decomment(commands):
     output = []
     for item in commands:
-        if item == "":
-            output.append("#")
-        elif item.startswith("#"):
-            output.append("#")  # Magic value, read on line 30
-        elif "#" in item:
-            output.append(item[:item.find("#")])
-        else:
+
+        cmtpos = item.find("#")
+        if cmtpos == -1:
             output.append(item)
+        else:
+            output.append(item[:cmtpos])
     return output
 
 if len(sys.argv) == 2:
@@ -30,7 +28,7 @@ commands = []
 
 for index, item in enumerate(infile, start=1):
     line = index
-    if not item == "#":
+    if not item == "":
         opcode = item.split(" ")[0]
         arguments = item.split(" ")[1:]
         while "" in arguments:
