@@ -27,11 +27,11 @@ class Command:
             pass
         elif self.opcode == "SET":
             self.size = 4  # FORMAT: SET *x y
-        elif self.opcode == "JUMP" or self.opcode == "JUMPL":
+        elif self.opcode == "JUMP":
             self.size = 3  # FORMAT: JUMP *x
-        elif self.opcode == "IFE" or self.opcode == "IFEL":
+        elif self.opcode == "IFE":
             self.size = 7  # FORMAT: IFE *x *y *z
-        elif self.opcode == "ADD" or self.opcode == "SUB":
+        elif self.opcode == "ADD":
             self.size = 5  # FORMAT: ADD/SUB *x *y
         elif self.opcode == "GCHR":
             self.size = 3

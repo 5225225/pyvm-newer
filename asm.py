@@ -33,28 +33,6 @@ def listin(clist, check):
     return False
 
 
-def search(line, argnumber):
-    addr = 0
-    for item in commands:
-        if str(item.line) == str(line.arguments[argnumber]):
-            break
-        addr = addr + item.size
-    else:
-        sys.stderr.write("{}: Could not find line number {}\n".format(
-            line.line,
-            line.arguments[argnumber]))
-    return(addr)
-
-
-def searchnoerr(linenum):
-    addr = 0
-    for item in commands:
-        if str(linenum) == str(item.line):
-            break
-        addr = addr + item.size
-    return(addr)
-
-
 opcodes = {
     "SET": 4,
     "JUMP": 5,
@@ -112,19 +90,13 @@ for cmd in commands:
         out(splitbytes(cmd.arguments[0]))
         out(cmd.arguments[1])
 
-    elif cmd.opcode == "JUMP" or cmd.opcode == "JUMPL":  # FORMAT: JUMP *x
-        if cmd.opcode == "JUMP":
-            out(splitbytes(cmd.arguments[0]))
-        if cmd.opcode == "JUMPL":
-            out(splitbytes(search(cmd, 0)))
+    elif cmd.opcode == "JUMP":
+        out(splitbytes(cmd.arguments[0]))
 
-    elif cmd.opcode == "IFE" or cmd.opcode == "IFEL":  # FORMAT: IFE *x *y *z
+    elif cmd.opcode == "IFE":
         out(splitbytes(cmd.arguments[0]))
         out(splitbytes(cmd.arguments[1]))
-        if cmd.opcode == "IFE":
-            out(splitbytes(cmd.arguments[2]))
-        if cmd.opcode == "IFEL":
-            out(splitbytes(search(cmd, 2)))
+        out(splitbytes(cmd.arguments[2]))
 
     elif cmd.opcode == "ADD" or cmd.opcode == "SUB":  # FORMAT: ADD/SUB *x *y
         out(splitbytes(cmd.arguments[0]))
@@ -140,13 +112,5 @@ for cmd in commands:
 strout = []
 
 for item in output:
-    if isinstance(type(item), type(0)):
-        strout.append(str(item))
-    elif item.startswith("!"):
-        linenum = item.split("+")[0][1:]
-        offset = item.split("+")[1]
-        for x in splitbytes(searchnoerr(linenum)+int(offset)):
-            strout.append(str(x))
-    else:
-        strout.append(str(item))
+    strout.append(str(item))
 print(json.dumps(strout))
